@@ -1,19 +1,19 @@
-require("dotenv").config();
+require('dotenv').config();
 
-const { PrismaMariaDb } = require("@prisma/adapter-mariadb");
-const { PrismaClient } = require("@prisma/client");
+const { PrismaMariaDb } = require('@prisma/adapter-mariadb');
+const { PrismaClient } = require('@prisma/client');
 
 function createAdapterFromDatabaseUrl() {
   const databaseUrl = process.env.DATABASE_URL;
 
   if (!databaseUrl) {
-    throw new Error("DATABASE_URL no esta definida");
+    throw new Error('DATABASE_URL no esta definida');
   }
 
   const url = new URL(databaseUrl);
 
-  if (url.protocol !== "mysql:") {
-    throw new Error("DATABASE_URL debe usar el protocolo mysql://");
+  if (url.protocol !== 'mysql:') {
+    throw new Error('DATABASE_URL debe usar el protocolo mysql://');
   }
 
   return new PrismaMariaDb({
@@ -21,7 +21,7 @@ function createAdapterFromDatabaseUrl() {
     port: url.port ? Number(url.port) : 3307,
     user: decodeURIComponent(url.username),
     password: decodeURIComponent(url.password),
-    database: url.pathname.replace(/^\//, ""),
+    database: url.pathname.replace(/^\//, ''),
   });
 }
 
